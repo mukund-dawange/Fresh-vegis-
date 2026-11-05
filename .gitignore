@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+Thumbs.db
+.qa/
+*.log
+freshleaf-github-pages.zip
+freshleaf-backup-*.json
+freshleaf-recovery-*.json

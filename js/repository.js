@@ -1,4 +1,4 @@
-import {createInitialState, validateState} from './store.js';
+import {createInitialState, validateState, upgradeState, VERSION} from './store.js';
 
 export const STORAGE_KEY = 'freshleaf.workspace.v1';
 const SESSION_KEY = 'freshleaf.session.v1';
@@ -22,7 +22,7 @@ export class Repository {
   read() {
     const raw=this.storage.getItem(STORAGE_KEY);
     if(!raw) throw new Error('Shop data is missing. Reload this page to initialise the workspace.');
-    try {return JSON.parse(raw);} catch {throw new Error('Stored shop data could not be read. Restore a valid backup.');}
+    try {const parsed=JSON.parse(raw);return parsed.schemaVersion===VERSION?parsed:validateState(upgradeState(parsed));} catch {throw new Error('Stored shop data could not be read. Restore a valid backup.');}
   }
   persist(state) {
     try {this.storage.setItem(STORAGE_KEY,JSON.stringify(state));}
@@ -36,7 +36,12 @@ export class Repository {
         const state=createInitialState();
         await setPassword(state.users[0],'admin123');await setPassword(state.users[1],'sales123');
         this.persist(state);
-      } else this.state=validateState(this.read());
+      } else {
+        const original=JSON.parse(this.storage.getItem(STORAGE_KEY));
+        const next=validateState(original);
+        if(original.schemaVersion!==VERSION) this.persist(next);
+        else this.state=next;
+      }
     });
   }
   async transaction(mutator) {
