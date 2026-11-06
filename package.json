@@ -1,8 +1,8 @@
 {
   "name": "freshleaf-shop-panel",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "description": "Buildless vegetable shop management and point of sale",
-  "scripts": { "start": "node scripts/serve.mjs", "test": "node --test tests/*.test.mjs", "check": "node --check js/store.js && node --check js/repository.js && node --check js/images.js && node --check js/icons.js && node --check js/app.js" }
+  "scripts": { "start": "node scripts/serve.mjs", "test": "node --test tests/*.test.mjs", "build:apps-script": "node scripts/build-apps-script.mjs", "check": "node --check js/store.js && node --check js/repository.js && node --check js/commands.js && node --check js/cloud-repository.js && node --check js/cloud-config.js && node --check js/images.js && node --check js/icons.js && node --check js/pwa.js && node --check js/app.js && node --check sw.js" }
 }

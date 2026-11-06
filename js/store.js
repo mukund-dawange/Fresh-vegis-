@@ -210,6 +210,14 @@ export function stats(sales) {
   const completed=sales.filter(s=>s.status==='completed');
   return {revenue:completed.reduce((a,s)=>a+s.total,0),profit:completed.reduce((a,s)=>a+s.total-s.cost,0),orders:completed.length,average:completed.length ? Math.round(completed.reduce((a,s)=>a+s.total,0)/completed.length) : 0};
 }
+export function eraseShopData(state, user, now = new Date()) {
+  requireAdmin(user);
+  state.products=[]; state.sales=[]; state.movements=[]; state.purchases=[];
+  state.recovery={startedAt:now.toISOString(),excludedSaleIds:[],nextOrder:1};
+  state.nextSale=1; state.demo=false;
+  state.settings={shopName:'Freshleaf',subtitle:'Your neighbourhood vegetable shop',address:'',phone:'',currency:'INR',receiptFooter:'Fresh picks. Happy meals. See you again!'};
+  // Accounts, password hashes, salts and session identity are deliberately retained.
+}
 export function createInitialState(now = new Date()) {
   const state = {schemaVersion:VERSION,revision:0,demo:true,createdAt:now.toISOString(),nextSale:1,settings:{shopName:'Freshleaf',subtitle:'Your neighbourhood vegetable shop',address:'',phone:'',currency:'INR',receiptFooter:'Fresh picks. Happy meals. See you again!'},users:[{id:'admin',name:'Alex Morgan',email:'admin@freshleaf.local',role:'admin'},{id:'sales',name:'Sam Taylor',email:'sales@freshleaf.local',role:'sales'}],products:[],sales:[],movements:[],purchases:[],recovery:{startedAt:now.toISOString(),excludedSaleIds:[],nextOrder:1}};
   const data = [

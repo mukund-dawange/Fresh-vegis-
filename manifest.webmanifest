@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "Freshleaf Sales",
+  "short_name": "Freshleaf",
+  "description": "Your vegetable shop sales counter, stock and receipts.",
+  "start_url": "./?workspace=sales",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f7f8f3",
+  "theme_color": "#163c2e",
+  "lang": "en",
+  "icons": [
+    {"src": "assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+    {"src": "assets/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable"}
+  ]
+}

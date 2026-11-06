@@ -4,5 +4,6 @@ Thumbs.db
 .qa/
 *.log
 freshleaf-github-pages.zip
+freshleaf-google-apps-script.zip
 freshleaf-backup-*.json
 freshleaf-recovery-*.json

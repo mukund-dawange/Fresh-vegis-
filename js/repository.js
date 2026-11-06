@@ -1,4 +1,5 @@
 import {createInitialState, validateState, upgradeState, VERSION} from './store.js';
+import {applyShopAction} from './commands.js';
 
 export const STORAGE_KEY = 'freshleaf.workspace.v1';
 const SESSION_KEY = 'freshleaf.session.v1';
@@ -66,5 +67,16 @@ export class Repository {
     return user;
   }
   refreshSession(user){sessionStorage.setItem(SESSION_KEY,JSON.stringify({id:user.id,fingerprint:user.passwordHash}));}
+  async perform(action,payload){return this.transaction((state,user)=>applyShopAction(state,user,action,payload));}
+  async backup(){return this.read();}
+  async updateAccount(values){
+    await this.transaction(async(state,user)=>{
+      if(user.role!=='admin')throw new Error('Management access is required.');
+      if(await hashPassword(values.current,user.salt)!==user.passwordHash)throw new Error('Your current password is incorrect.');
+      if(!values.name.trim())throw new Error('Enter your display name.');
+      user.name=values.name.trim().slice(0,80);if(values.password)await setPassword(user,values.password);
+    });
+    this.refreshSession(this.state.users.find(user=>user.id===this.session().id));
+  }
   logout(){sessionStorage.removeItem(SESSION_KEY);}
 }
