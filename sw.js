@@ -1,5 +1,5 @@
 // Increment this version whenever the application shell changes.
-const VERSION='1.2.0-mobile';
+const VERSION='1.2.1-cloud';
 const PREFIX=`freshleaf-shell:${self.registration.scope}:`;
 const CACHE=PREFIX+VERSION;
 const ASSETS=['./','index.html','styles.css','manifest.webmanifest','js/app.js','js/store.js','js/repository.js','js/commands.js','js/cloud-repository.js','js/cloud-config.js','js/icons.js','js/images.js','js/pwa.js','assets/favicon.svg','assets/icon-192.png','assets/icon-512.png','assets/icon-maskable-512.png'];
